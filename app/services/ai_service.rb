@@ -24,8 +24,9 @@ class AiService
           Recipient : #{draft.recipient}
           Sender : #{draft.sender}
           Tone : #{draft.tone}
-          Reading Time : #{draft.reading_time}
+          Reading time : #{draft.reading_time}
           Language : #{draft.language}
+          Use emojis like : #{draft.emojis}
         STR
       }
     ]
@@ -56,6 +57,7 @@ class AiService
           Tone : #{draft.tone}
           Reading Time : #{draft.reading_time}
           Language : #{draft.language}
+          Use emojis like : #{draft.emojis}
         STR
       },
       {

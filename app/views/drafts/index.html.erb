@@ -71,7 +71,7 @@
   <!-- Tone Selection -->
   <div>
     <label>Tone</label><br>
-    <%= form.select :tone, Draft::TONES, { prompt: "Select a tone" } %>
+    <%= form.select :tone, Draft::TONES, { prompt: "Select a tone", selected: @reference&.tone } %>
   </div>
 
   <br>
@@ -79,7 +79,7 @@
   <!-- Reading Time Selection -->
   <div>
     <label>Reading Time</label><br>
-    <%= form.select :reading_time, Draft::READING_TIMES, { prompt: "Select reading time" } %>
+    <%= form.select :reading_time, Draft::READING_TIMES, { prompt: "Select reading time", selected: @reference&.reading_time } %>
   </div>
 
   <br>
@@ -87,7 +87,14 @@
   <!-- Language Selection -->
   <div>
     <label>Language</label><br>
-    <%= form.select :language, Draft::LANGUAGES, { prompt: "Select language" } %>
+    <%= form.select :language, Draft::LANGUAGES, { prompt: "Select language", selected: @reference&.language } %>
+  </div>
+
+  <br>
+
+  <div>
+    <label>Emojis</label><br>
+    <%= form.select :emojis, Draft::EMOJIS, { prompt: "Select emojis", selected: @reference&.emojis } %>
   </div>
 
   <br>

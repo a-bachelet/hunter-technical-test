@@ -23,6 +23,18 @@
 <p><strong>Purpose:</strong> <%= @draft.purpose %></p>
 <p><strong>Recipient:</strong> <%= @draft.recipient %></p>
 <p><strong>Sender:</strong> <%= @draft.sender %></p>
+<% if @draft.tone%>
+  <p><strong>Tone:</strong> <%= @draft.tone %></p>
+<% end %>
+<% if @draft.reading_time%>
+  <p><strong>Reading Time:</strong> <%= @draft.reading_time %></p>
+<% end %>
+<% if @draft.language%>
+  <p><strong>Language:</strong> <%= @draft.language %></p>
+<% end %>
+<% if @draft.emojis%>
+  <p><strong>Emojis:</strong> <%= @draft.emojis %></p>
+<% end %>
 
 <hr/>
 

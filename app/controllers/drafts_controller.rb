@@ -15,7 +15,8 @@ class DraftsController < ApplicationController
       sender: draft_params[:sender],
       tone: draft_params[:tone],
       reading_time: draft_params[:reading_time],
-      language: draft_params[:language]
+      language: draft_params[:language],
+      emojis: draft_params[:emojis]
     )
 
     if draft.save
@@ -66,7 +67,7 @@ class DraftsController < ApplicationController
   end
 
   def draft_params
-    params.permit(:purpose, :recipient, :sender, :tone, :reading_time, :language)
+    params.permit(:purpose, :recipient, :sender, :tone, :reading_time, :language, :emojis)
   end
 
   def refine_params
