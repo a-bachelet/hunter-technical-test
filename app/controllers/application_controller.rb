@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   end
 
   def write
-    puts params
+    @purpose = params[:purpose]
+    @recipient = params[:recipient]
+    @sender = params[:sender]
   end
 end
