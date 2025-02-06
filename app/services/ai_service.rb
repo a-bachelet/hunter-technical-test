@@ -35,6 +35,47 @@ class AiService
     JSON.parse(json_str).with_indifferent_access
   end
 
+  def refine_cold_email(draft, instructions)
+    messages = [
+      {
+        role: "system",
+        content: <<-STR.squish
+          You are a cold email generator.
+          Your mission is to generate beautiful cold emails.
+          for given purpose, recipient and sender.
+          You have to give me an answer in a form of a JSON object,
+          containing subject and body keys.
+        STR
+      },
+      {
+        role: "user",
+        content: <<-STR
+          Purpose : #{draft.purpose}
+          Recipient : #{draft.recipient}
+          Sender : #{draft.sender}
+          Tone : #{draft.tone}
+          Reading Time : #{draft.reading_time}
+          Language : #{draft.language}
+        STR
+      },
+      {
+        role: "assistant",
+        content: { subject: draft.subject, body: draft.body }.to_json
+      },
+      {
+        role: "user",
+        content: <<-STR
+          Refine this email regarding following instructions :
+          #{instructions}
+        STR
+      }
+    ]
+
+    response = chat(messages)
+    json_str = response.dig("choices", 0, "message", "content")
+    JSON.parse(json_str).with_indifferent_access
+  end
+
   private
 
   def generate_client

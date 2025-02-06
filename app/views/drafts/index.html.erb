@@ -2,65 +2,99 @@
 
 <hr/>
 
+<!-- Previous Drafts Section -->
 <h2>Previous Drafts</h2>
-<ul>
-  <% @drafts.each do |draft| %>
-    <li>
-      <b><%= draft.subject %></b> 
-      (<%= draft.recipient %>) - 
-      <%= link_to "Use", root_path(reference_id: draft.id) %>
-      <%= link_to "View", draft %>
-      <%= link_to "Delete", draft_path(draft), data: { turbo_method: :delete, confirm: "Are you sure?" } %>
-    </li>
-  <% end %>
-</ul>
-  <% if flash[:errors] %>
-    <hr/>
-    <ul>
-      <% flash[:errors].each do |error| %>
-        <li><%= error %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <% if flash[:success] %>
-    <hr/>
-    <%= flash[:success] %>
-  <% end %>
+
+<% if @drafts.any? %>
+  <ul>
+    <% @drafts.each do |draft| %>
+      <li>
+        <b><%= draft.subject || "No subject yet" %></b> 
+        (<%= draft.recipient %>) - 
+        <%= link_to "Use", root_path(reference_id: draft.id) %> |
+        <%= link_to "View", draft %> |
+        <%= link_to "Delete", draft_path(draft), data: { turbo_method: :delete, confirm: "Are you sure?" } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No drafts available.</p>
+<% end %>
+
 <hr/>
 
+<!-- Flash Messages -->
+<% if flash[:errors] %>
+  <h3>Errors</h3>
+  <ul>
+    <% flash[:errors].each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+  <hr/>
+<% end %>
+
+<% if flash[:success] %>
+  <p><strong>Success:</strong> <%= flash[:success] %></p>
+  <hr/>
+<% end %>
+
+<!-- Cold Email Form -->
+<h2>Create a New Draft</h2>
+
 <%= form_with url: drafts_path, method: :post, data: { turbo: false } do |form| %>
+  
+  <!-- Purpose -->
   <div>
-    <%= form.label :purpose, "Email Purpose" %>
+    <label>Email Purpose</label><br>
     <%= form.text_area :purpose, placeholder: "Write the purpose of your cold email...", rows: 4, value: @reference&.purpose %>
   </div>
+  
+  <br>
 
+  <!-- Recipient -->
   <div>
-    <%= form.label :recipient, "Recipient" %>
+    <label>Recipient</label><br>
     <%= form.text_field :recipient, placeholder: "Recipient", value: @reference&.recipient %>
   </div>
 
+  <br>
+
+  <!-- Sender -->
   <div>
-    <%= form.label :sender, "Sender" %>
-    <%= form.text_field :sender, placeholder: "Sender", value: @reference&.recipient %>
+    <label>Sender</label><br>
+    <%= form.text_field :sender, placeholder: "Sender", value: @reference&.sender %>
   </div>
 
+  <br>
+
+  <!-- Tone Selection -->
   <div>
-    <%= form.label :tone, "Tone" %>
-    <%= form.select :tone, Draft::TONES, { prompt: "Select a tone", selected: @reference&.tone } %>
-    <%= @reference&.tone %>
+    <label>Tone</label><br>
+    <%= form.select :tone, Draft::TONES, { prompt: "Select a tone" } %>
   </div>
 
+  <br>
+
+  <!-- Reading Time Selection -->
   <div>
-    <%= form.label :reading_time, "Reading Time" %>
-    <%= form.select :reading_time, Draft::READING_TIMES, { prompt: "Select reading time", selected: @reference&.reading_time } %>
+    <label>Reading Time</label><br>
+    <%= form.select :reading_time, Draft::READING_TIMES, { prompt: "Select reading time" } %>
   </div>
 
+  <br>
+
+  <!-- Language Selection -->
   <div>
-    <%= form.label :language, "Language" %>
-    <%= form.select :language, Draft::LANGUAGES, { prompt: "Select language", selected: @reference&.language } %>
+    <label>Language</label><br>
+    <%= form.select :language, Draft::LANGUAGES, { prompt: "Select language" } %>
   </div>
 
+  <br>
+
+  <!-- Submit Button -->
   <div>
     <%= form.submit "Generate" %>
   </div>
+
 <% end %>

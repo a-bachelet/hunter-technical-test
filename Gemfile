@@ -63,3 +63,5 @@ group :test do
 end
 
 gem "ruby-openai", "~> 7.3"
+
+gem "dotenv", "~> 3.1"

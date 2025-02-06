@@ -1,24 +1,60 @@
 <h1>AI Cold Email Writer</h1>
 
+<!-- Flash Messages -->
+<% if flash[:errors] %>
+  <h3>Errors</h3>
+  <ul>
+    <% flash[:errors].each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+  <hr/>
+<% end %>
+
 <% if flash[:success] %>
   <hr/>
-  <%= flash[:success] %>
+  <p><strong>Success:</strong> <%= flash[:success] %></p>
+  <hr/>
+<% end %>
+
+<!-- Draft Details -->
+<h2>Draft Details</h2>
+
+<p><strong>Purpose:</strong> <%= @draft.purpose %></p>
+<p><strong>Recipient:</strong> <%= @draft.recipient %></p>
+<p><strong>Sender:</strong> <%= @draft.sender %></p>
+
+<hr/>
+
+<!-- Email Result -->
+<h2>Generated Email</h2>
+
+<!-- Subject -->
+<p><strong>Subject:</strong></p>
+<p><%= @draft.subject.presence || "No subject generated yet." %></p>
+
+<!-- Email Body with Line Breaks -->
+<p><strong>Body:</strong></p>
+<pre><%= @draft.body.presence || "No body generated yet." %></pre>
+
+<hr/>
+
+<h2>Refine Email</h2>
+
+<%= form_with url: refine_draft_path(@draft), method: :post, data: { turbo: false } do |form| %>
+  <div>
+    <label>Refinement Instructions</label><br>
+    <%= form.text_area :instructions, placeholder: "Write the instructions of the email refinment...", rows: 4 %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit "Refine" %>
+  </div>
 <% end %>
 
 <hr/>
 
-<div>Purpose : <%= @draft.purpose %></div>
-<div>Recipient : <%= @draft.recipient %></div>
-<div>Sender : <%= @draft.sender %></div>
-
-<hr/>
-
-<h2>Result :</h2>
-<div><b>Subject :</b></div>
-<p><%= @draft.subject %></p>
-<div><b>Body :</b></div>
-<p><%= @draft.body %></p>
-
-<hr/>
-
+<!-- Navigation Link -->
 <%= link_to "Go to list", root_path %>

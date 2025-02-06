@@ -4,6 +4,10 @@ class DraftsController < ApplicationController
     @reference = Draft.find_by(id: params[:reference_id]) if params[:reference_id]
   end
 
+  def show
+    @draft = Draft.find(params[:id])
+  end
+
   def create
     draft = Draft.new(
       purpose: draft_params[:purpose],
@@ -32,8 +36,20 @@ class DraftsController < ApplicationController
     end
   end
 
-  def show
-    @draft = Draft.find(params[:id])
+  def refine
+    draft = Draft.find(params[:id])
+
+    ai_service = AiService.new
+    refinment = ai_service.refine_cold_email(draft, refine_params[:instructions])
+
+    if draft.update(subject: refinment[:subject], body: refinment[:body])
+      flash[:success] = "Draft refined successfully!"
+      redirect_to draft
+    else
+      puts draft.errors.full_messages
+      flash[:errors] = draft.errors.full_messages
+      redirect_to draft
+    end
   end
 
   def destroy
@@ -51,5 +67,9 @@ class DraftsController < ApplicationController
 
   def draft_params
     params.permit(:purpose, :recipient, :sender, :tone, :reading_time, :language)
+  end
+
+  def refine_params
+    params.permit(:instructions)
   end
 end
