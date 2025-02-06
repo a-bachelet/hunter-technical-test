@@ -23,6 +23,9 @@ class AiService
           Purpose : #{draft.purpose}
           Recipient : #{draft.recipient}
           Sender : #{draft.sender}
+          Tone : #{draft.tone}
+          Reading Time : #{draft.reading_time}
+          Language : #{draft.language}
         STR
       }
     ]

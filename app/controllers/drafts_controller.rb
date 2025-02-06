@@ -9,6 +9,9 @@ class DraftsController < ApplicationController
       purpose: params[:purpose],
       recipient: params[:recipient],
       sender: params[:sender],
+      tone: params[:tone],
+      reading_time: params[:reading_time],
+      language: params[:language]
     )
 
     ai_service = AiService.new

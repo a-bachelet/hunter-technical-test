@@ -34,6 +34,22 @@
   </div>
 
   <div>
+    <%= form.label :tone, "Tone" %>
+    <%= form.select :tone, Draft::TONES, { prompt: "Select a tone", selected: @reference&.tone } %>
+    <%= @reference&.tone %>
+  </div>
+
+  <div>
+    <%= form.label :reading_time, "Reading Time" %>
+    <%= form.select :reading_time, Draft::READING_TIMES, { prompt: "Select reading time", selected: @reference&.reading_time } %>
+  </div>
+
+  <div>
+    <%= form.label :language, "Language" %>
+    <%= form.select :language, Draft::LANGUAGES, { prompt: "Select language", selected: @reference&.language } %>
+  </div>
+
+  <div>
     <%= form.submit "Generate" %>
   </div>
 <% end %>
