@@ -11,9 +11,8 @@ class AiService
         role: "system",
         content: <<-STR.squish
           You are a cold email generator.
-          Your mission is to generate beautiful cold emails
+          Your mission is to generate beautiful cold emails.
           for given purpose, recipient and sender.
-          Do not include any placeholder.
           You have to give me an answer in a form of a JSON object,
           containing subject and body keys.
         STR
@@ -30,7 +29,7 @@ class AiService
 
     response = chat(messages)
     json_str = response.dig("choices", 0, "message", "content")
-    JSON.parse(json_str)
+    JSON.parse(json_str).with_indifferent_access
   end
 
   private
