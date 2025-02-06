@@ -1,1 +1,9 @@
-Hello World !
+<%= form_with url: '/write', method: :post, data: { turbo: false } do |form| %>
+  <div>
+    <%= form.label :message, "Enter your text:" %>
+    <%= form.text_field :message, class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
