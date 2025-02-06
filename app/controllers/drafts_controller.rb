@@ -1,5 +1,7 @@
 class DraftsController < ApplicationController
   def index
+    @drafts = Draft.order(created_at: :desc)
+    @reference = Draft.find_by(id: params[:reference_id]) if params[:reference_id]
   end
 
   def create
@@ -22,5 +24,11 @@ class DraftsController < ApplicationController
 
   def show
     @draft = Draft.find(params[:id])
+  end
+
+  def destroy
+    Draft.find(params[:id])&.destroy
+
+    redirect_to drafts_path
   end
 end

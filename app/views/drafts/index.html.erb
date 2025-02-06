@@ -1,19 +1,36 @@
 <h1>AI Cold Email Writer</h1>
 
+<hr/>
+
+<h2>Previous Drafts</h2>
+<ul>
+  <% @drafts.each do |draft| %>
+    <li>
+      <b><%= draft.subject %></b> 
+      (<%= draft.recipient %>) - 
+      <%= link_to "Use", root_path(reference_id: draft.id) %>
+      <%= link_to "View", draft %>
+      <%= link_to "Delete", draft_path(draft), data: { turbo_method: :delete, confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
+
+<hr/>
+
 <%= form_with url: drafts_path, method: :post, data: { turbo: false } do |form| %>
   <div>
     <%= form.label :purpose, "Email Purpose" %>
-    <%= form.text_area :purpose, placeholder: "Write the purpose of your cold email...", rows: 4 %>
+    <%= form.text_area :purpose, placeholder: "Write the purpose of your cold email...", rows: 4, value: @reference&.purpose %>
   </div>
 
   <div>
     <%= form.label :recipient, "Recipient" %>
-    <%= form.text_field :recipient, placeholder: "Recipient" %>
+    <%= form.text_field :recipient, placeholder: "Recipient", value: @reference&.recipient %>
   </div>
 
   <div>
     <%= form.label :sender, "Sender" %>
-    <%= form.text_field :sender, placeholder: "Sender" %>
+    <%= form.text_field :sender, placeholder: "Sender", value: @reference&.recipient %>
   </div>
 
   <div>
