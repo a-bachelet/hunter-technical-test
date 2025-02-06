@@ -5,7 +5,7 @@ class AiService
     @client = generate_client
   end
 
-  def generate_cold_email(purpose, recipient, sender)
+  def generate_cold_email(draft)
     messages = [
       {
         role: "system",
@@ -20,9 +20,9 @@ class AiService
       {
         role: "user",
         content: <<-STR
-          Purpose : #{purpose}
-          Recipient : #{recipient}
-          Sender : #{sender}
+          Purpose : #{draft.purpose}
+          Recipient : #{draft.recipient}
+          Sender : #{draft.sender}
         STR
       }
     ]

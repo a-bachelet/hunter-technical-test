@@ -3,15 +3,24 @@ class DraftsController < ApplicationController
   end
 
   def create
-    @purpose = params[:purpose]
-    @recipient = params[:recipient]
-    @sender = params[:sender]
+    draft = Draft.create(
+      purpose: params[:purpose],
+      recipient: params[:recipient],
+      sender: params[:sender],
+    )
 
     ai_service = AiService.new
+    cold_email = ai_service.generate_cold_email(draft)
 
-    @cold_email = ai_service.generate_cold_email(@purpose, @recipient, @sender)
+    draft.update(
+      subject: cold_email[:subject],
+      body: cold_email[:body]
+    )
+
+    redirect_to draft
   end
 
-  def destroy
+  def show
+    @draft = Draft.find(params[:id])
   end
 end
