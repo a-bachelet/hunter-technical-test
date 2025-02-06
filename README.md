@@ -1,24 +1,46 @@
-# README
+# AI Cold Email Writer 📧
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a **Rails 8+** application that generates cold emails using AI.
+It provides a simple UI to draft, refine, and manage emails.
 
-Things you may want to cover:
+## 📦 Requirements
+- Docker 🐳
+- Dev Containers (Optional)
+- Ruby on Rails (bundled with the container)
+- PostgreSQL (bundled with the container)
+- OpenAI API Key 🔑
 
-* Ruby version
+---
 
-* System dependencies
+## 🔧 Setup Instructions
 
-* Configuration
+### **⬇️ Clone the Repository**
+```sh
+git clone https://github.com/a-bachelet/hunter-technical-test.git
+cd hunter-technical-test
+```
 
-* Database creation
+### **⚙️ Configure Environment Variables**
+Copy the sample file :
+```sh
+cp .env.sample .env
+```
 
-* Database initialization
+Update your OpenAI API Key :
+```sh
+OPEN_AI_KEY="your-api-key-here"
+```
 
-* How to run the test suite
+### **🏗️ Start the Application**
+```sh
+cd .devcontainer
+docker compose up -d
+docker compose exec rails app bash
+cd workspaces/hunter-technical-test
+bundle
+bin/rails db:migrate
+bin/rails s -b 0.0.0.0
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### **🎉 Enjoy !**
+Go to http://0.0.0.0:3000 and enjoy the application
