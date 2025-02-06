@@ -1,5 +1,12 @@
 <h1>AI Cold Email Writer</h1>
 
+<% if flash[:success] %>
+  <hr/>
+  <%= flash[:success] %>
+<% end %>
+
+<hr/>
+
 <div>Purpose : <%= @draft.purpose %></div>
 <div>Recipient : <%= @draft.recipient %></div>
 <div>Sender : <%= @draft.sender %></div>

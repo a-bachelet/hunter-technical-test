@@ -14,7 +14,18 @@
     </li>
   <% end %>
 </ul>
-
+  <% if flash[:errors] %>
+    <hr/>
+    <ul>
+      <% flash[:errors].each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if flash[:success] %>
+    <hr/>
+    <%= flash[:success] %>
+  <% end %>
 <hr/>
 
 <%= form_with url: drafts_path, method: :post, data: { turbo: false } do |form| %>

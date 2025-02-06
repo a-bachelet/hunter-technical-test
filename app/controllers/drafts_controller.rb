@@ -5,24 +5,31 @@ class DraftsController < ApplicationController
   end
 
   def create
-    draft = Draft.create(
-      purpose: params[:purpose],
-      recipient: params[:recipient],
-      sender: params[:sender],
-      tone: params[:tone],
-      reading_time: params[:reading_time],
-      language: params[:language]
+    draft = Draft.new(
+      purpose: draft_params[:purpose],
+      recipient: draft_params[:recipient],
+      sender: draft_params[:sender],
+      tone: draft_params[:tone],
+      reading_time: draft_params[:reading_time],
+      language: draft_params[:language]
     )
 
-    ai_service = AiService.new
-    cold_email = ai_service.generate_cold_email(draft)
+    if draft.save
+      ai_service = AiService.new
+      cold_email = ai_service.generate_cold_email(draft)
 
-    draft.update(
-      subject: cold_email[:subject],
-      body: cold_email[:body]
-    )
+      draft.update(
+        subject: cold_email[:subject],
+        body: cold_email[:body]
+      )
 
-    redirect_to draft
+      flash[:success] = "Draft created successfully!"
+      redirect_to draft
+    else
+      puts draft.errors.full_messages
+      flash[:errors] = draft.errors.full_messages
+      redirect_to root_path
+    end
   end
 
   def show
@@ -32,6 +39,17 @@ class DraftsController < ApplicationController
   def destroy
     Draft.find(params[:id])&.destroy
 
+    flash[:success] = "Draft deleted successfully!"
     redirect_to drafts_path
+  end
+
+  private
+
+  def index_params
+    params.permit(:reference_id)
+  end
+
+  def draft_params
+    params.permit(:purpose, :recipient, :sender, :tone, :reading_time, :language)
   end
 end
