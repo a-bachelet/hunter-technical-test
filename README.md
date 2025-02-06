@@ -35,7 +35,7 @@ OPEN_AI_KEY="your-api-key-here"
 ```sh
 cd .devcontainer
 docker compose up -d
-docker compose exec rails app bash
+docker compose exec rails-app bash
 cd workspaces/hunter-technical-test
 bundle
 bin/rails db:migrate
